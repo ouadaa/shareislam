@@ -1,0 +1,5 @@
+PRAGMA foreign_keys=OFF;
+BEGIN TRANSACTION;
+CREATE TABLE "index" ("path_info" VARCHAR(255),"title" VARCHAR(255),"content" TEXT,"lang" VARCHAR(4),"description" VARCHAR(255),"keywords" VARCHAR(255),"label" VARCHAR(255),"hidden" CHAR(1),"series" INT(4));
+INSERT INTO "index" VALUES('','','ouadaa','en','','','',NULL,0);
+COMMIT;
