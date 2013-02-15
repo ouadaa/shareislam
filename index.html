@@ -1,206 +1,210 @@
-<?php
-/*
-  phpsqlitesite - PHP / SQLite db -> web script. Requires PHP 5.2 and SQLite 3
-  Copyright (C) 2012 http://phpsqlitesite.com
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
 
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
+<!--
+This is an example that shows how to create an application that uses
+an embedded sqlite database
+in a mobile device (iphone,ipod,ipad,android using phonegap, jquery
+and sqlite.
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
+Your phonegap project will already contain the phonegap.js.
 
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+You will need to download and add to your project the jquery.min.js
+file
 
-/* phpsqlitesite 0.3 */
-// TODO: redirect missing URI_EXTENSION
+The application will create a database called WebSqlDb with a
+table in it called User, which contains three fields  UserId,
+FirstName and LastName
 
-// gather, sanitize and set up info for this request
+When the application is run the firsttime, if the local database does
+not exist, the application
+will create the database and the table.
 
-$_start = microtime(true);
+The application shows two text boxes which you can use to add values
+to the database using the add record button
 
-// language to use if no other specified
-define('DEFAULT_LANG', 'en');
+The application also has a refresh button which will get the data from
+the database and show it on the screen
 
-// database location
-define('DB_PATH', 'demo.sqlite');
-define('DISQUS_ID', 'YOUR_DISQUS_ID');
-define('ADDTHIS_ID', 'YOUR_ADDTHIS_PUBID');
-define('URI_EXTENSION', '.html');
+When the application is run on the device the onBodyLoad() function is
+called, which sets up the database and table
 
-// inform the user
-if (strpos(realpath(DB_PATH), $_SERVER['DOCUMENT_ROOT'], 0) === 0) {
-    error_log('Database location in document root');
+The Add Record button calls the AddValueToDB() function
+
+The Refresh button calls the ListDBValues() function
+
+There are a few alert statements in this application, which are only
+there for debuggin purposes.  They look like this
+alert("DEBUGGING: followed by some text");
+
+These are only in the application to indicate where the application is
+at when it is processing functions, etc
+
+You will need to comment these out before you deploy/sell your
+application
+
+-->
+
+
+<!-- Change this if you want to allow scaling -->
+   <meta name="viewport" content="width=default-width; user-
+scalable=no" />
+   <meta http-equiv="Content-type" content="text/html;charset=utf-8">
+
+   <title>Embedded Sql Example</title>
+
+<!-- include the next line to use phonegap javascript functions -->
+    <script type="text/javascript" charset="utf-8" src="phonegap.js"></
+script>
+
+<!-- include the next line to use jquery functions in your application
+you must download this and include the directory your html file is in
+-->
+        <script type="text/javascript" charset="utf-8" src="jquery.min.js"></
+script>
+
+
+<!-- main scripts used in this example -->
+ <script type="text/javascript" charset="utf-8">
+
+// global variables
+var db;
+var shortName = 'WebSqlDB';
+var version = '1.0';
+var displayName = 'WebSqlDB';
+var maxSize = 65535;
+
+// this is called when an error happens in a transaction
+function errorHandler(transaction, error) {
+   alert('Error: ' + error.message + ' code: ' + error.code);
+
 }
 
-// extract table name from uri
-$_db['table'] = pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_FILENAME); //PATHINFO_FILENAME added in php 5.2.
-// This will probably run on earlier versions if a method other than PATHINFO_FILENAME is used.
-
-// extract language from uri if present
-$page['lang'] = isset($_GET['lang']) ? preg_replace('@[^\w\-_]@', '', $_GET['lang']) : DEFAULT_LANG;
-$page['path_info'] = isset($_SERVER['PATH_INFO']) ? preg_replace('@[^\w\-_]@', '', substr($_SERVER['PATH_INFO'], 0, strpos($_SERVER['PATH_INFO'], '.'))) : '';
-$page['search']    = isset($_GET['search']) ? preg_replace('@\W@', '%', $_GET['search']) : '';
-
-
-
-
-
-// define query
-// TODO: prepare query
-$_q['page']       = "SELECT path_info,title,content,lang,description,keywords,label FROM '$_db[table]' WHERE path_info = '$page[path_info]' AND lang='$page[lang]'";
-$_q['navigation'] = "SELECT path_info,title,label FROM '$_db[table]' WHERE hidden IS NOT 'Y' AND lang='$page[lang]' ORDER BY series ASC";
-
-// debugger
-# print_r($_q);die;
-
-// open database connection
-$db_path = realpath(DB_PATH);
-$dbh     = new PDO('sqlite:' . $db_path);
-
-// set connection options
-$dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-
-// check if table exists
-$_q['table'] = "SELECT COUNT(name) FROM sqlite_master WHERE type='table' and name='$_db[table]'";
-$tbl_query   = $dbh->query($_q['table']);
-$tbl_res     = $tbl_query->fetchColumn();
-$tbl_exists  = ($tbl_res != 0);
-if (!$tbl_exists) {
-    trigger_error('No table \'' . $_db['table'] . '\'');
-    exit();
+// this is called when a successful transaction happens
+function successCallBack() {
+   alert("DEBUGGING: success");
 }
 
-// fetch navigation info
-foreach ($dbh->query($_q['navigation']) as $row) {
-    $navigation[] = $row;
+
+function nullHandler(){};
+
+// called when the application loads
+function onBodyLoad(){
+
+// This alert is used to make sure the application is loaded correctly
+// you can comment this out once you have the application working
+alert("DEBUGGING: we are in the onBodyLoad() function");
+
+ if (!window.openDatabase) {
+   // not all mobile devices support databases  if it does not, the
+following alert will display
+   // indicating the device will not be albe to run this application
+   alert('Databases are not supported in this browser.');
+   return;
+ }
+
+// this line tries to open the database base locally on the device
+// if it does not exist, it will create it and return a database
+object stored in variable db
+ db = openDatabase(shortName, version, displayName,maxSize);
+
+// this line will try to create the table User in the database just
+created/openned
+ db.transaction(function(tx){
+
+  // you can uncomment this next line if you want the User table to be
+empty each time the application runs
+  // tx.executeSql( 'DROP TABLE User',nullHandler,nullHandler);
+
+  // this line actually creates the table User if it does not exist
+and sets up the three columns and their types
+  // note the UserId column is an auto incrementing column which is
+useful if you want to pull back distinct rows
+  // easily from the table.
+   tx.executeSql( 'CREATE TABLE IF NOT EXISTS User(UserId INTEGER NOT
+NULL PRIMARY KEY, FirstName TEXT NOT NULL, LastName TEXT NOT NULL)',
+[],nullHandler,errorHandler);
+ },errorHandler,successCallBack);
 }
 
-// fetch current page
-foreach ($dbh->query($_q['page']) as $row) {
-    $page = array_merge($page, $row);
+
+// list the values in the database to the screen using jquery to
+update the #lbUsers element
+function ListDBValues() {
+
+ if (!window.openDatabase) {
+  alert('Databases are not supported in this browser.');
+  return;
+ }
+
+
+// this line clears out any content in the #lbUsers element on the
+page so that the next few lines will show updated
+// content and not just keep repeating lines
+ $('#lbUsers').html('');
+
+// this next section will select all the content from the User table
+and then go through it row by row
+// appending the UserId  FirstName  LastName to the  #lbUsers element
+on the page
+ db.transaction(function(transaction) {
+   transaction.executeSql('SELECT * FROM User;', [],
+     function(transaction, result) {
+      if (result != null && result.rows != null) {
+        for (var i = 0; i < result.rows.length; i++) {
+          var row = result.rows.item(i);
+          $('#lbUsers').append('<br>' + row.UserId + '. ' +
+row.FirstName+ ' ' + row.LastName);
+        }
+      }
+     },errorHandler);
+ },errorHandler,nullHandler);
+
+
+ return;
 }
 
-// return 404 if no page found
-if (!array_key_exists('content', $page)) {
-    header("HTTP/1.0 404 Not Found");
-    header("Status: 404 Not Found");
-    exit();
+
+// this is the function that puts values into the database using the
+values from the text boxes on the screen
+function AddValueToDB() {
+
+ if (!window.openDatabase) {
+   alert('Databases are not supported in this browser.');
+   return;
+ }
+
+// this is the section that actually inserts the values into the User
+table
+ db.transaction(function(transaction) {
+   transaction.executeSql('INSERT INTO User(FirstName, LastName)
+VALUES (?,?)',[$('#txFirstName').val(), $('#txLastName').val()],
+     nullHandler,errorHandler);
+   });
+
+
+// this calls the function that will show what is in the User table in
+the database
+ ListDBValues();
+
+ return false;
 }
 
-// build navigation
-$base = $_SERVER['SCRIPT_NAME'];
-foreach ($navigation as $nav) {
-    $target_location = dirname($base);
 
-    if (!empty($nav['path_info'])) {
-        $target_location = "$base/$nav[path_info]" . URI_EXTENSION;
-    }
 
-    $page['navigation'][] = <<<END
-<a href="$target_location" title="$nav[title]">$nav[label]</a>
-END;
-}
 
-// perform search ( and replace page content )
-if (!empty($page['search'])) {
-    $_q['search'] = "SELECT path_info,title FROM '$_db[table]' WHERE content LIKE '%$page[search]%' OR title LIKE '%$page[search]%' OR path_info LIKE '%$page[search]%'";
-
-    // fetch search info
-    $page['results'] = array();
-    foreach ($dbh->query($_q['search']) as $row) {
-        $page['results'][] = $row;
-    }
-
-    $page['title']   = $page['content'] = 'Search results for &lsquo;' . str_replace('%', ' ', $page['search']) . '&rsquo;';
-    $page['content'] .= '<ul>';
-    foreach ($page['results'] as $res) {
-        $result_location = "$base/$res[path_info]" . URI_EXTENSION;
-        $page['content'] .= <<<END
-<li><a href="$result_location" title="$res[title]">$res[title]</a></li>
-END;
-    }
-    $page['content'] .= '</ul>';
-
-    // no comments section on search results page
-    $page['disqus'] = '';
-}
-
-header('Content-Type: text/html; charset=UTF-8');
-header('Content-Language: ' . $page['lang']);
-
-?>
-<!doctype html>
-<html lang="<?php echo $page['lang']; ?>">
-    <head>
-        <title><?php echo $page['title']; ?></title>
-        <meta charset="UTF-8">
-        <meta name="description" content="<?php echo $page['description']; ?>">
-        <meta name="keywords" content="<?php echo $page['keywords']; ?>">
-        <style type="text/css">
-            html,body {
-                height: 100%;
-                max-width:100%;
-                margin-left:auto;
-                margin-right:auto;
-            }
-            body {
-                background:transparent;
-            }
-            div {
-                background:transparent;
-            }
-            #navigation a:hover {
-                text-decoration:none;
-            }
-            #navigation #search {
-                background:transparent;
-                position:absolute;
-                right:1px;
-                top:1px;
-            }
-
-            #content, #comments {
-                border:transparent;
-                padding:4px;
-            }
-
-            #footer {
-                border-radius:0px 0px 5px 5px;
-                font-size:smaller;
-            }
-        </style>
-    </head>
-    <body>
-        <div id="navigation">
-            <?php echo implode(' | ', $page['navigation']); ?>
-            <div id="search">
-                <form method="GET" action="<?php echo $_SERVER['SCRIPT_NAME']; ?>">
-                    <label for="search_input">البحت </label> <input id="search_input" name="search" type="text" value="<?php echo str_replace('%', ' ', $page['search']); ?>">
-                </form>
-            </div>
-        </div>
-        <div id="content">
-            <h1><?php echo $page['title']; ?></h1>
-            <?php echo $page['addthis']; ?><br>
-
-            <?php if (!empty($page['image'])): ?>
-                <img alt="<?php echo $page['image']; ?>" src="<?php echo dirname($base) . '/' . $page['image']; ?>">
-            <?php endif ?>
-
-            <?php echo $page['content'], "\n"; ?>
-        </div>
-        <div id="comments">
-            <?php echo $page['disqus']; ?>
-        </div>
-        <div id="footer">
-            <span style = "float:right">تم فتح الصفحة في أقل من <?php echo microtime(true) - $_start; ?> تانية
-                حجم الصفحة <?php echo ceil(memory_get_peak_usage() / 1024); ?> كيلوبايت</span>
-        </div>
-    </body>
+</script>
+</head>
+<body onload="onBodyLoad()">
+<h1>WebSQL</h1>
+<input id="txFirstName" type="text" placeholder="FirstName">
+<input id="txLastName" type="text" placeholder="Last Name">
+<input type="button" value="Add record" onClick="AddValueToDB()">
+<input type="button" value="Refresh" onClick="ListDBValues()"> <br>
+<br>
+<span style="font-weight:bold;">Currently stored values:</span>
+<span id="lbUsers"></span>
+</body>
 </html>
