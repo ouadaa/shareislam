@@ -1,0 +1,347 @@
+body,h1,h2,h3,p,quote,small,form,input,ul,li,ol,label{
+	/* Simple page reset */
+	margin:0px;
+	padding:0px;
+}
+@font-face {
+        font-family: 'ae_AlBattar';
+        src: url('../fonts/ae_AlBattar.eot'); /* IE9 Compat Modes */
+        src: url('../fonts/ae_AlBattar.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+             url('../fonts/ae_AlBattar.woff') format('woff'), /* Modern Browsers */
+             url('../fonts/ae_AlBattar.ttf')  format('truetype'), /* Safari, Android, iOS */
+             url('../fonts/ae_AlBattar.svg#ae_AlBattar') format('svg'); /* Legacy iOS */
+}
+body {
+       font-family: 'ae_AlBattar', Fallback, sans-serif;
+}
+body{
+	/* Setting default text color, background and a font stack */
+	color:#cccccc;
+	font-size:23px;
+	background:#121212 url(../image/background.png) center top; height:100%;
+
+}
+
+ul{
+	margin:0;
+	padding:0;
+}
+
+ul.container{
+	/* The topmost UL */
+	width:auto;
+	margin:0 auto;
+	padding:50px;
+}
+
+li{
+	list-style:none;
+	text-align:right;
+}
+
+li.menu{
+	/* The main list elements */
+	padding:5px 0;
+	width:100%;
+}
+
+li.button a{
+	/* The section titles */
+-webkit-border-radius: 36px 36px;
+-moz-border-radius: 36px 36px;
+border-radius: 36px 36px;
+	display:block;
+	font-family:ae_AlBattar;
+	font-size:21px;
+	height:34px;
+	overflow:hidden;
+	padding:10px 20px 0;
+	position:relative;
+	width:auto;
+}
+
+li.button a:hover{
+	/* Removing the inherited underline from the titles */
+	text-decoration:none;
+}
+
+li.button a span{
+	/* This span acts as the right part of the section's background */
+	height:44px;
+	position:absolute;
+	right:0;
+	top:0;
+	width:4px;
+	display:block;
+}
+
+/* Setting up different styles for each section color */
+
+li.button a.a{background:url(../image/a.png) repeat-x top left; color:#000000;
+border-style: solid;
+border-width: 0px 35px 0px 3px;
+-moz-border-image: url(../image/a-a.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/a-a.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/a-a.png) 0 35 0 0 stretch;
+border-image: url(../image/a-a.png) 0 35 0 0 stretch;}
+li.button a.a span{ background:url(../image/a.png) repeat-x top right;}
+
+li.button a.a-a{background:url(../image/i.png) repeat-x top left; color:#000000;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/a-a.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/a-a.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/a-a.png) 0 35 0 0 stretch;
+border-image: url(../image/a-a.png) 0 35 0 0 stretch;}
+li.button a.a-a span{ background:url(../image/i.png) repeat-x top right;}
+
+li.button a.b-b{background:url(../image/i.png) repeat-x top left; color:#000000;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/b-b.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/b-b.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/b-b.png) 0 35 0 0 stretch;
+border-image: url(../image/b-b.png) 0 35 0 0 stretch;}
+li.button a.b-b span{ background:url(../image/i.png) repeat-x top right;}
+
+li.button a.b{background:url(../image/a.png) repeat-x top left; color:#000000;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/b-b.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/b-b.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/b-b.png) 0 35 0 0 stretch;
+border-image: url(../image/b-b.png) 0 35 0 0 stretch;}
+li.button a.b span{ background:url(../image/a.png) repeat-x top right;}
+
+li.button a.d{background:url(../image/a.png) repeat-x top left; color:#000000;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/d-d.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/d-d.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/d-d.png) 0 35 0 0 stretch;
+border-image: url(../image/d-d.png) 0 35 0 0 stretch;}
+li.button a.d span{ background:url(../image/a.png) repeat-x top right;}
+
+li.button a.d-d{background:url(../image/i.png) repeat-x top left; color:#000000;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/d-d.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/d-d.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/d-d.png) 0 35 0 0 stretch;
+border-image: url(../image/d-d.png) 0 35 0 0 stretch;}
+li.button a.d-d span{ background:url(../image/i.png) repeat-x top right;}
+
+li.button a.e{background:url(../image/a.png) repeat-x top left; color:#000000;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/e-e.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/e-e.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/e-e.png) 0 35 0 0 stretch;
+border-image: url(../image/e-e.png) 0 35 0 0 stretch;}
+li.button a.e span{ background:url(../image/a.png) repeat-x top right;}
+
+li.button a.e-e{background:url(../image/i.png) repeat-x top left; color:#000000;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/e-e.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/e-e.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/e-e.png) 0 35 0 0 stretch;
+border-image: url(../image/e-e.png) 0 35 0 0 stretch;}
+li.button a.e-e span{ background:url(../image/i.png) repeat-x top right;}
+
+li.button a.f{background:url(../image/a.png) repeat-x top left; color:#000000;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/f-f.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/f-f.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/f-f.png) 0 35 0 0 stretch;
+border-image: url(../image/f-f.png) 0 35 0 0 stretch;}
+li.button a.f span{ background:url(../image/a.png) repeat-x top right;}
+
+li.button a.f-f{background:url(../image/i.png) repeat-x top left; color:#000000;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/f-f.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/f-f.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/f-f.png) 0 35 0 0 stretch;
+border-image: url(../image/f-f.png) 0 35 0 0 stretch;}
+li.button a.f-f span{ background:url(../image/i.png) repeat-x top right;}
+
+li.button a.g{background:url(../image/a.png) repeat-x top left; color:#000000;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/g-g.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/g-g.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/g-g.png) 0 35 0 0 stretch;
+border-image: url(../image/g-g.png) 0 35 0 0 stretch;}
+li.button a.g span{ background:url(../image/a.png) repeat-x top right;}
+
+li.button a.g-g{background:url(../image/i.png) repeat-x top left; color:#000000;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/g-g.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/g-g.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/g-g.png) 0 35 0 0 stretch;
+border-image: url(../image/g-g.png) 0 35 0 0 stretch;}
+li.button a.g-g span{ background:url(../image/i.png) repeat-x top right;}
+
+li.button a.h{background:url(../image/a.png) repeat-x top left; color:#000000;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/h-h.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/h-h.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/h-h.png) 0 35 0 0 stretch;
+border-image: url(../image/h-h.png) 0 35 0 0 stretch;}
+li.button a.h span{ background:url(../image/a.png) repeat-x top right;}
+
+li.button a.h-h{background:url(../image/i.png) repeat-x top left; color:#000000;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/h-h.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/h-h.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/h-h.png) 0 35 0 0 stretch;
+border-image: url(../image/h-h.png) 0 35 0 0 stretch;}
+li.button a.h-h span{ background:url(../image/i.png) repeat-x top right;}
+
+li.button a.j{background:url(../image/a.png) repeat-x top left; color:#000000;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/j-j.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/j-j.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/j-j.png) 0 35 0 0 stretch;
+border-image: url(../image/j-j.png) 0 35 0 0 stretch;}
+li.button a.j span{ background:url(../image/a.png) repeat-x top right;}
+
+li.button a.j-j{background:url(../image/i.png) repeat-x top left; color:#000000;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/j-j.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/j-j.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/j-j.png) 0 35 0 0 stretch;
+border-image: url(../image/j-j.png) 0 35 0 0 stretch;}
+li.button a.j-j span{ background:url(../image/i.png) repeat-x top right;}
+
+li.button a.i{background:url(../image/i.png) repeat-x top left; color:#000000;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/i-i.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/i-i.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/i-i.png) 0 35 0 0 stretch;
+border-image: url(../image/i-i.png) 0 35 0 0 stretch;}
+li.button a.i span{ background:url(../image/i.png) repeat-x top right;}
+
+li.button a.i-i{background:url(../image/i.png) repeat-x top left; color:#000000;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/i-i.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/i-i.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/i-i.png) 0 35 0 0 stretch;
+border-image: url(../image/i-i.png) 0 35 0 0 stretch;}
+li.button a.i-i span{ background:url(../image/i.png) repeat-x top right;}
+
+li.button a.c{background:url(../image/1top-highlight.png) repeat-x top left; color:transparent;}
+li.button a.c span{ background:url(../image/1top-highlight.png) repeat-x top right;}
+
+/* The hover effects */
+
+li.button a:hover{ background-position:bottom left;}
+li.button a:hover span{ background-position:bottom right;}
+
+.dropdown{
+	/* The expandable lists */
+	display:none;
+	padding-top:5px;
+	width:100%;
+}
+
+.dropdown li{
+	/* Each element in the expandable list */
+	background:#121212 url(../image/1top-highlight.png) repeat-x;
+	border:0px solid #40392C;
+	color:#CCCCCC;
+	margin:0px 0;
+	padding:0px 0px;
+}
+
+.dropup2 li{
+	/* Each element in the expandable list */
+	background:#121212 url(../image/dropdown1.png) repeat-x;
+	border:0px solid #40392C;
+	color:#CCCCCC;
+	margin:0px 0;
+	padding:0px 0px;
+}
+
+.dropup li{
+	/* Each element in the expandable list */
+	background:#121212 url(../image/1top-highlight.png) repeat-x;
+	border:0px solid #40392C;
+	color:#CCCCCC;
+	margin:0px 0;
+	padding:0px 0px;
+}
+
+.dropdown1{
+	/* The expandable lists */
+	display:none;
+	padding-top:5px;
+	width:100%;
+}
+
+.dropdown1 li{
+	/* Each element in the expandable list */
+	background:#121212 url(../image/dropdown1.png) repeat-x;
+	border:0px solid #40392C;
+	color:#CCCCCC;
+	margin:0px 0;
+	padding:0px 0px;
+}
+
+
+/* The styles below are only necessary for the demo page */
+
+h1{
+	font-family:ae_AlBattar;
+	font-size:36px;
+	font-weight:normal;
+	margin-bottom:15px;
+}
+
+h2{
+	font-family:ae_AlBattar;
+	font-size:12px;
+	font-weight:normal;
+	padding-right:140px;
+	right:0;
+	text-align:right;
+	text-transform:uppercase;
+	top:15px;
+}
+
+.clear{
+	clear:both;
+}
+
+#main{
+	/* The main container */
+	margin:15px auto;
+	text-align:right;
+	width:100%;
+	position:relative;
+}
+
+a, a:visited {
+	color:#0196e3;
+	text-decoration:none;
+	outline:none;
+}
+
+a:hover{
+	text-decoration:underline;
+}
+
+p{
+	/* The tut info on the bottom of the page */
+	padding:0px;
+	text-align:right;
+}

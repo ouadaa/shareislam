@@ -1,0 +1,1784 @@
+/*
+
+ SoundManager 2: "page as playlist" example
+ ------------------------------------------
+ http://schillmania.com/projects/soundmanager2/
+
+*/
+html { height:100%; }
+
+body { color:#000000; font-size: 12px; font-family: ae_AlBattar; background:#121212 url(../image/bg.jpg) center top; height:100%; }
+.myFontClass {
+font-family: ae_AlBattar;
+letter-spacing: 2px;
+color: #800000;
+}
+.spectrum-container {
+ display:none;
+}
+
+ul.use-spectrum li.sm2_playing .spectrum-container {
+ position:absolute;
+ left:0px;
+ top:0px;
+ margin-left:-266px;
+ margin-top:-1px;
+ display:block;
+ background-color:#5588bb;
+ border:1px solid #99ccff;
+ border-radius:4px;
+}
+
+ul.use-spectrum .spectrum-box {
+ position:relative;
+ width:255px;
+ font-size:1em;
+ padding:2px 0px;
+ height:1.2em;
+ overflow:hidden;
+}
+
+ul.use-spectrum .spectrum-box .spectrum {
+ position:absolute;
+ left:0px;
+ top:-2px;
+ margin-top:20px;
+ display:block;
+ font-size:1px;
+ width:1px;
+ height:1px; /* set to 50px for a thick line, 1px for a thin line, etc. */
+ overflow:hidden;
+ background-color:#fff;
+}
+
+
+ul.a-a {
+ list-style-type:none;
+ margin:0px;
+ padding:0px;
+
+}
+
+ul.a-a li {
+ /* assume all items will be sounds rather than wait for onload etc. in this example.. may differ for your uses. */
+ position:relative;
+ display:block;
+ width:auto;
+/* this one  */
+ border-radius:50px;
+ font-size:2em;
+ color:black;
+ padding:0.25em 0.5em 0.25em 0.5em;
+ border:none;
+ letter-spacing:-1px; /* ZOMG WEB X.0. ;) */
+ background-color:transparent;
+ -webkit-transition-property: hover;
+ -webkit-transition: background-color 0.15s ease-in-out;
+ -moz-transition: background-color 0.15s linear 0s; /* firefox 4 */
+  -o-transition-property: background-color; /* opera 10.5 */
+  -o-transition-duration: 0.15s;
+
+}
+
+ul.a-a li a {
+ display:block;
+ text-decoration:none;
+ font-weight:normal;
+ color:#310202;
+ text-align:right;
+ font-size:18px;
+ outline:none;
+ position:relative;
+ z-index:2;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/a-a.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/a-a.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/a-a.png) 0 35 0 0 stretch;
+border-image: url(../image/a-a.png) 0 35 0 0 stretch;
+}
+
+ul.a-a li.sm2_playing,
+ul.a-a li.sm2_paused,
+ul.a-a li.sm2_playing a {
+ color:black;
+ border-radius:20px;
+}
+
+ul.a-a li:hover {
+background:url(../image/ouadaa.png) repeat-x top right;
+}
+
+ul.a-a li:hover a {
+ color:white;
+}
+
+ul.a-a li.sm2_playing,
+ul.a-a li.sm2_playing:hover {
+background:url(../image/a.png) repeat-x top right;
+}
+
+
+ul.a-a-a {
+ list-style-type:none;
+ margin:0px;
+ padding:0px;
+
+}
+
+ul.a-a-a li {
+ /* assume all items will be sounds rather than wait for onload etc. in this example.. may differ for your uses. */
+ position:relative;
+ display:block;
+ width:auto;
+/* this one  */
+ border-radius:50px;
+ font-size:2em;
+ color:black;
+ padding:0.25em 0.5em 0.25em 0.5em;
+ border:none;
+ letter-spacing:-1px; /* ZOMG WEB X.0. ;) */
+ background-color:transparent;
+ -webkit-transition-property: hover;
+ -webkit-transition: background-color 0.15s ease-in-out;
+ -moz-transition: background-color 0.15s linear 0s; /* firefox 4 */
+  -o-transition-property: background-color; /* opera 10.5 */
+  -o-transition-duration: 0.15s;
+
+}
+
+ul.a-a-a li a {
+ display:block;
+ text-decoration:none;
+ font-weight:normal;
+ color:#310202;
+ text-align:right;
+ font-size:18px;
+ outline:none;
+ position:relative;
+ z-index:2;
+
+}
+
+ul.a-a-a li.sm2_playing,
+ul.a-a-a li.sm2_paused,
+ul.a-a-a li.sm2_playing a {
+ color:black;
+ border-radius:20px;
+}
+
+ul.a-a-a li:hover {
+background:url(../image/ouadaa.png) repeat-x top right;
+}
+
+ul.a-a-a li:hover a {
+ color:white;
+}
+
+ul.a-a-a li.sm2_playing,
+ul.a-a-a li.sm2_playing:hover {
+background:url(../image/a.png) repeat-x top right;
+}
+
+
+ul.a-a-a-a {
+ list-style-type:none;
+ margin:0px;
+ padding:0px;
+
+}
+
+ul.a-a-a-a li {
+ /* assume all items will be sounds rather than wait for onload etc. in this example.. may differ for your uses. */
+ position:relative;
+ display:block;
+ width:auto;
+/* this one  */
+ border-radius:50px;
+ font-size:2em;
+ color:black;
+ padding:0.25em 0.5em 0.25em 0.5em;
+ border:none;
+ letter-spacing:-1px; /* ZOMG WEB X.0. ;) */
+ background-color:transparent;
+ -webkit-transition-property: hover;
+ -webkit-transition: background-color 0.15s ease-in-out;
+ -moz-transition: background-color 0.15s linear 0s; /* firefox 4 */
+  -o-transition-property: background-color; /* opera 10.5 */
+  -o-transition-duration: 0.15s;
+
+}
+
+ul.a-a-a-a li a {
+ display:block;
+ text-decoration:none;
+ font-weight:normal;
+ color:#310202;
+ text-align:right;
+ font-size:18px;
+ outline:none;
+ position:relative;
+ z-index:2;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/a-a-a-a.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/a-a-a-a.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/a-a-a-a.png) 0 35 0 0 stretch;
+border-image: url(../image/a-a-a-a.png) 0 35 0 0 stretch;
+}
+
+ul.a-a-a-a li.sm2_playing,
+ul.a-a-a-a li.sm2_paused,
+ul.a-a-a-a li.sm2_playing a {
+ color:black;
+ border-radius:20px;
+}
+
+ul.a-a-a-a li:hover {
+background:url(../image/ouadaa.png) repeat-x top right;
+}
+
+ul.a-a-a-a li:hover a {
+ color:white;
+}
+
+ul.a-a-a-a li.sm2_playing,
+ul.a-a-a-a li.sm2_playing:hover {
+background:url(../image/a.png) repeat-x top right;
+}
+
+
+
+ul.b-b {
+ list-style-type:none;
+ margin:0px;
+ padding:0px;
+
+}
+
+ul.b-b li {
+ /* assume all items will be sounds rather than wait for onload etc. in this example.. may differ for your uses. */
+ position:relative;
+ display:block;
+ width:auto;
+/* this one  */
+ border-radius:50px;
+ font-size:2em;
+ color:black;
+ padding:0.25em 0.5em 0.25em 0.5em;
+ border:none;
+ letter-spacing:-1px; /* ZOMG WEB X.0. ;) */
+ background-color:transparent;
+ -webkit-transition-property: hover;
+ -webkit-transition: background-color 0.15s ease-in-out;
+ -moz-transition: background-color 0.15s linear 0s; /* firefox 4 */
+  -o-transition-property: background-color; /* opera 10.5 */
+  -o-transition-duration: 0.15s;
+
+}
+
+ul.b-b li a {
+ display:block;
+ text-decoration:none;
+ font-weight:normal;
+ color:#310202;
+ text-align:right;
+ font-size:18px;
+ outline:none;
+ position:relative;
+ z-index:2;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/b-b.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/b-b.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/b-b.png) 0 35 0 0 stretch;
+border-image: url(../image/b-b.png) 0 35 0 0 stretch;
+}
+
+ul.b-b li.sm2_playing,
+ul.b-b li.sm2_paused,
+ul.b-b li.sm2_playing a {
+ color:black;
+ border-radius:20px;
+}
+
+ul.b-b li:hover {
+background:url(../image/ouadaa.png) repeat-x top right;
+}
+
+ul.b-b li:hover a {
+ color:white;
+}
+
+ul.b-b li.sm2_playing,
+ul.b-b li.sm2_playing:hover {
+background:url(../image/a.png) repeat-x top right;
+}
+
+
+ul.b-b-b {
+ list-style-type:none;
+ margin:0px;
+ padding:0px;
+
+}
+
+ul.b-b-b li {
+ /* assume all items will be sounds rather than wait for onload etc. in this example.. may differ for your uses. */
+ position:relative;
+ display:block;
+ width:auto;
+/* this one  */
+ border-radius:50px;
+ font-size:2em;
+ color:black;
+ padding:0.25em 0.5em 0.25em 0.5em;
+ border:none;
+ letter-spacing:-1px; /* ZOMG WEB X.0. ;) */
+ background-color:transparent;
+ -webkit-transition-property: hover;
+ -webkit-transition: background-color 0.15s ease-in-out;
+ -moz-transition: background-color 0.15s linear 0s; /* firefox 4 */
+  -o-transition-property: background-color; /* opera 10.5 */
+  -o-transition-duration: 0.15s;
+
+}
+
+ul.b-b-b li a {
+ display:block;
+ text-decoration:none;
+ font-weight:normal;
+ color:#310202;
+ text-align:right;
+ font-size:18px;
+ outline:none;
+ position:relative;
+ z-index:2;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/b-b-b.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/b-b-b.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/b-b-b.png) 0 35 0 0 stretch;
+border-image: url(../image/b-b-b.png) 0 35 0 0 stretch;
+}
+
+ul.b-b-b li.sm2_playing,
+ul.b-b-b li.sm2_paused,
+ul.b-b-b li.sm2_playing a {
+ color:black;
+ border-radius:20px;
+}
+
+ul.b-b-b li:hover {
+background:url(../image/ouadaa.png) repeat-x top right;
+}
+
+ul.b-b-b li:hover a {
+ color:white;
+}
+
+ul.b-b-b li.sm2_playing,
+ul.b-b-b li.sm2_playing:hover {
+background:url(../image/a.png) repeat-x top right;
+}
+
+
+
+ul.c-c {
+ list-style-type:none;
+ margin:0px;
+ padding:0px;
+
+}
+
+ul.c-c li {
+ /* assume all items will be sounds rather than wait for onload etc. in this example.. may differ for your uses. */
+ position:relative;
+ display:block;
+ width:auto;
+/* this one  */
+ border-radius:50px;
+ font-size:2em;
+ color:black;
+ padding:0.25em 0.5em 0.25em 0.5em;
+ border:none;
+ letter-spacing:-1px; /* ZOMG WEB X.0. ;) */
+ background-color:transparent;
+ -webkit-transition-property: hover;
+ -webkit-transition: background-color 0.15s ease-in-out;
+ -moz-transition: background-color 0.15s linear 0s; /* firefox 4 */
+  -o-transition-property: background-color; /* opera 10.5 */
+  -o-transition-duration: 0.15s;
+
+}
+
+ul.c-c li a {
+ display:block;
+ text-decoration:none;
+ font-weight:normal;
+ color:#310202;
+ text-align:right;
+ font-size:18px;
+ outline:none;
+ position:relative;
+ z-index:2;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/c-c.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/c-c.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/c-c.png) 0 35 0 0 stretch;
+border-image: url(../image/c-c.png) 0 35 0 0 stretch;
+}
+
+ul.c-c li.sm2_playing,
+ul.c-c li.sm2_paused,
+ul.c-c li.sm2_playing a {
+ color:black;
+ border-radius:20px;
+}
+
+ul.c-c li:hover {
+background:url(../image/ouadaa.png) repeat-x top right;
+}
+
+ul.c-c li:hover a {
+ color:white;
+}
+
+ul.c-c li.sm2_playing,
+ul.c-c li.sm2_playing:hover {
+background:url(../image/a.png) repeat-x top right;
+}
+
+
+ul.c-c-c {
+ list-style-type:none;
+ margin:0px;
+ padding:0px;
+
+}
+
+ul.c-c-c li {
+ /* assume all items will be sounds rather than wait for onload etc. in this example.. may differ for your uses. */
+ position:relative;
+ display:block;
+ width:auto;
+/* this one  */
+ border-radius:50px;
+ font-size:2em;
+ color:black;
+ padding:0.25em 0.5em 0.25em 0.5em;
+ border:none;
+ letter-spacing:-1px; /* ZOMG WEB X.0. ;) */
+ background-color:transparent;
+ -webkit-transition-property: hover;
+ -webkit-transition: background-color 0.15s ease-in-out;
+ -moz-transition: background-color 0.15s linear 0s; /* firefox 4 */
+  -o-transition-property: background-color; /* opera 10.5 */
+  -o-transition-duration: 0.15s;
+
+}
+
+ul.c-c-c li a {
+ display:block;
+ text-decoration:none;
+ font-weight:normal;
+ color:#310202;
+ text-align:right;
+ font-size:18px;
+ outline:none;
+ position:relative;
+ z-index:2;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/c-c-c.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/c-c-c.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/c-c-c.png) 0 35 0 0 stretch;
+border-image: url(../image/c-c-c.png) 0 35 0 0 stretch;
+}
+
+ul.c-c-c li.sm2_playing,
+ul.c-c-c li.sm2_paused,
+ul.c-c-c li.sm2_playing a {
+ color:black;
+ border-radius:20px;
+}
+
+ul.c-c-c li:hover {
+background:url(../image/ouadaa.png) repeat-x top right;
+}
+
+ul.c-c-c li:hover a {
+ color:white;
+}
+
+ul.c-c-c li.sm2_playing,
+ul.c-c-c li.sm2_playing:hover {
+background:url(../image/a.png) repeat-x top right;
+}
+
+
+
+ul.d-d {
+ list-style-type:none;
+ margin:0px;
+ padding:0px;
+
+}
+
+ul.d-d li {
+ /* assume all items will be sounds rather than wait for onload etc. in this example.. may differ for your uses. */
+ position:relative;
+ display:block;
+ width:auto;
+/* this one  */
+ border-radius:50px;
+ font-size:2em;
+ color:black;
+ padding:0.25em 0.5em 0.25em 0.5em;
+ border:none;
+ letter-spacing:-1px; /* ZOMG WEB X.0. ;) */
+ background-color:transparent;
+ -webkit-transition-property: hover;
+ -webkit-transition: background-color 0.15s ease-in-out;
+ -moz-transition: background-color 0.15s linear 0s; /* firefox 4 */
+  -o-transition-property: background-color; /* opera 10.5 */
+  -o-transition-duration: 0.15s;
+
+}
+
+ul.d-d li a {
+ display:block;
+ text-decoration:none;
+ font-weight:normal;
+ color:#310202;
+ text-align:right;
+ font-size:18px;
+ outline:none;
+ position:relative;
+ z-index:2;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/d-d.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/d-d.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/d-d.png) 0 35 0 0 stretch;
+border-image: url(../image/d-d.png) 0 35 0 0 stretch;
+}
+
+ul.d-d li.sm2_playing,
+ul.d-d li.sm2_paused,
+ul.d-d li.sm2_playing a {
+ color:black;
+ border-radius:20px;
+}
+
+ul.d-d li:hover {
+background:url(../image/ouadaa.png) repeat-x top right;
+}
+
+ul.d-d li:hover a {
+ color:white;
+}
+
+ul.d-d li.sm2_playing,
+ul.d-d li.sm2_playing:hover {
+background:url(../image/a.png) repeat-x top right;
+}
+
+
+ul.d-d-d {
+ list-style-type:none;
+ margin:0px;
+ padding:0px;
+
+}
+
+ul.d-d-d li {
+ /* assume all items will be sounds rather than wait for onload etc. in this example.. may differ for your uses. */
+ position:relative;
+ display:block;
+ width:auto;
+/* this one  */
+ border-radius:50px;
+ font-size:2em;
+ color:black;
+ padding:0.25em 0.5em 0.25em 0.5em;
+ border:none;
+ letter-spacing:-1px; /* ZOMG WEB X.0. ;) */
+ background-color:transparent;
+ -webkit-transition-property: hover;
+ -webkit-transition: background-color 0.15s ease-in-out;
+ -moz-transition: background-color 0.15s linear 0s; /* firefox 4 */
+  -o-transition-property: background-color; /* opera 10.5 */
+  -o-transition-duration: 0.15s;
+
+}
+
+ul.d-d-d li a {
+ display:block;
+ text-decoration:none;
+ font-weight:normal;
+ color:#310202;
+ text-align:right;
+ font-size:18px;
+ outline:none;
+ position:relative;
+ z-index:2;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/d-d-d.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/d-d-d.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/d-d-d.png) 0 35 0 0 stretch;
+border-image: url(../image/d-d-d.png) 0 35 0 0 stretch;
+}
+
+ul.d-d-d li.sm2_playing,
+ul.d-d-d li.sm2_paused,
+ul.d-d-d li.sm2_playing a {
+ color:black;
+ border-radius:20px;
+}
+
+ul.d-d-d li:hover {
+background:url(../image/ouadaa.png) repeat-x top right;
+}
+
+ul.d-d-d li:hover a {
+ color:white;
+}
+
+ul.d-d-d li.sm2_playing,
+ul.d-d-d li.sm2_playing:hover {
+background:url(../image/a.png) repeat-x top right;
+}
+
+
+
+ul.e-e {
+ list-style-type:none;
+ margin:0px;
+ padding:0px;
+
+}
+
+ul.e-e li {
+ /* assume all items will be sounds rather than wait for onload etc. in this example.. may differ for your uses. */
+ position:relative;
+ display:block;
+ width:auto;
+/* this one  */
+ border-radius:50px;
+ font-size:2em;
+ color:black;
+ padding:0.25em 0.5em 0.25em 0.5em;
+ border:none;
+ letter-spacing:-1px; /* ZOMG WEB X.0. ;) */
+ background-color:transparent;
+ -webkit-transition-property: hover;
+ -webkit-transition: background-color 0.15s ease-in-out;
+ -moz-transition: background-color 0.15s linear 0s; /* firefox 4 */
+  -o-transition-property: background-color; /* opera 10.5 */
+  -o-transition-duration: 0.15s;
+
+}
+
+ul.e-e li a {
+ display:block;
+ text-decoration:none;
+ font-weight:normal;
+ color:#310202;
+ text-align:right;
+ font-size:18px;
+ outline:none;
+ position:relative;
+ z-index:2;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/e-e.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/e-e.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/e-e.png) 0 35 0 0 stretch;
+border-image: url(../image/e-e.png) 0 35 0 0 stretch;
+}
+
+ul.e-e li.sm2_playing,
+ul.e-e li.sm2_paused,
+ul.e-e li.sm2_playing a {
+ color:black;
+ border-radius:20px;
+}
+
+ul.e-e li:hover {
+background:url(../image/ouadaa.png) repeat-x top right;
+}
+
+ul.e-e li:hover a {
+ color:white;
+}
+
+ul.e-e li.sm2_playing,
+ul.e-e li.sm2_playing:hover {
+background:url(../image/a.png) repeat-x top right;
+}
+
+
+ul.e-e-e {
+ list-style-type:none;
+ margin:0px;
+ padding:0px;
+
+}
+
+ul.e-e-e li {
+ /* assume all items will be sounds rather than wait for onload etc. in this example.. may differ for your uses. */
+ position:relative;
+ display:block;
+ width:auto;
+/* this one  */
+ border-radius:50px;
+ font-size:2em;
+ color:black;
+ padding:0.25em 0.5em 0.25em 0.5em;
+ border:none;
+ letter-spacing:-1px; /* ZOMG WEB X.0. ;) */
+ background-color:transparent;
+ -webkit-transition-property: hover;
+ -webkit-transition: background-color 0.15s ease-in-out;
+ -moz-transition: background-color 0.15s linear 0s; /* firefox 4 */
+  -o-transition-property: background-color; /* opera 10.5 */
+  -o-transition-duration: 0.15s;
+
+}
+
+ul.e-e-e li a {
+ display:block;
+ text-decoration:none;
+ font-weight:normal;
+ color:#310202;
+ text-align:right;
+ font-size:18px;
+ outline:none;
+ position:relative;
+ z-index:2;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/e-e-e.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/e-e-e.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/e-e-e.png) 0 35 0 0 stretch;
+border-image: url(../image/e-e-e.png) 0 35 0 0 stretch;
+}
+
+ul.e-e-e li.sm2_playing,
+ul.e-e-e li.sm2_paused,
+ul.e-e-e li.sm2_playing a {
+ color:black;
+ border-radius:20px;
+}
+
+ul.e-e-e li:hover {
+background:url(../image/ouadaa.png) repeat-x top right;
+}
+
+ul.e-e-e li:hover a {
+ color:white;
+}
+
+ul.e-e-e li.sm2_playing,
+ul.e-e-e li.sm2_playing:hover {
+background:url(../image/a.png) repeat-x top right;
+}
+
+
+
+
+ul.f-f {
+ list-style-type:none;
+ margin:0px;
+ padding:0px;
+
+}
+
+ul.f-f li {
+ /* assume all items will be sounds rather than wait for onload etc. in this example.. may differ for your uses. */
+ position:relative;
+ display:block;
+ width:auto;
+/* this one  */
+ border-radius:50px;
+ font-size:2em;
+ color:black;
+ padding:0.25em 0.5em 0.25em 0.5em;
+ border:none;
+ letter-spacing:-1px; /* ZOMG WEB X.0. ;) */
+ background-color:transparent;
+ -webkit-transition-property: hover;
+ -webkit-transition: background-color 0.15s ease-in-out;
+ -moz-transition: background-color 0.15s linear 0s; /* firefox 4 */
+  -o-transition-property: background-color; /* opera 10.5 */
+  -o-transition-duration: 0.15s;
+
+}
+
+ul.f-f li a {
+ display:block;
+ text-decoration:none;
+ font-weight:normal;
+ color:#310202;
+ text-align:right;
+ font-size:18px;
+ outline:none;
+ position:relative;
+ z-index:2;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/f-f.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/f-f.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/f-f.png) 0 35 0 0 stretch;
+border-image: url(../image/f-f.png) 0 35 0 0 stretch;
+}
+
+ul.f-f li.sm2_playing,
+ul.f-f li.sm2_paused,
+ul.f-f li.sm2_playing a {
+ color:black;
+ border-radius:20px;
+}
+
+ul.f-f li:hover {
+background:url(../image/ouadaa.png) repeat-x top right;
+}
+
+ul.f-f li:hover a {
+ color:white;
+}
+
+ul.f-f li.sm2_playing,
+ul.f-f li.sm2_playing:hover {
+background:url(../image/a.png) repeat-x top right;
+}
+
+
+ul.f-f-f {
+ list-style-type:none;
+ margin:0px;
+ padding:0px;
+
+}
+
+ul.f-f-f li {
+ /* assume all items will be sounds rather than wait for onload etc. in this example.. may differ for your uses. */
+ position:relative;
+ display:block;
+ width:auto;
+/* this one  */
+ border-radius:50px;
+ font-size:2em;
+ color:black;
+ padding:0.25em 0.5em 0.25em 0.5em;
+ border:none;
+ letter-spacing:-1px; /* ZOMG WEB X.0. ;) */
+ background-color:transparent;
+ -webkit-transition-property: hover;
+ -webkit-transition: background-color 0.15s ease-in-out;
+ -moz-transition: background-color 0.15s linear 0s; /* firefox 4 */
+  -o-transition-property: background-color; /* opera 10.5 */
+  -o-transition-duration: 0.15s;
+
+}
+
+ul.f-f-f li a {
+ display:block;
+ text-decoration:none;
+ font-weight:normal;
+ color:#310202;
+ text-align:right;
+ font-size:18px;
+ outline:none;
+ position:relative;
+ z-index:2;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/f-f-f.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/f-f-f.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/f-f-f.png) 0 35 0 0 stretch;
+border-image: url(../image/f-f-f.png) 0 35 0 0 stretch;
+}
+
+ul.f-f-f li.sm2_playing,
+ul.f-f-f li.sm2_paused,
+ul.f-f-f li.sm2_playing a {
+ color:black;
+ border-radius:20px;
+}
+
+ul.f-f-f li:hover {
+background:url(../image/ouadaa.png) repeat-x top right;
+}
+
+ul.f-f-f li:hover a {
+ color:white;
+}
+
+ul.f-f-f li.sm2_playing,
+ul.f-f-f li.sm2_playing:hover {
+background:url(../image/a.png) repeat-x top right;
+}
+
+
+ul.g-g {
+ list-style-type:none;
+ margin:0px;
+ padding:0px;
+
+}
+
+ul.g-g li {
+ /* assume all items will be sounds rather than wait for onload etc. in this example.. may differ for your uses. */
+ position:relative;
+ display:block;
+ width:auto;
+/* this one  */
+ border-radius:50px;
+ font-size:2em;
+ color:black;
+ padding:0.25em 0.5em 0.25em 0.5em;
+ border:none;
+ letter-spacing:-1px; /* ZOMG WEB X.0. ;) */
+ background-color:transparent;
+ -webkit-transition-property: hover;
+ -webkit-transition: background-color 0.15s ease-in-out;
+ -moz-transition: background-color 0.15s linear 0s; /* firefox 4 */
+  -o-transition-property: background-color; /* opera 10.5 */
+  -o-transition-duration: 0.15s;
+
+}
+
+ul.g-g li a {
+ display:block;
+ text-decoration:none;
+ font-weight:normal;
+ color:#310202;
+ text-align:right;
+ font-size:18px;
+ outline:none;
+ position:relative;
+ z-index:2;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/g-g.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/g-g.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/g-g.png) 0 35 0 0 stretch;
+border-image: url(../image/g-g.png) 0 35 0 0 stretch;
+}
+
+ul.g-g li.sm2_playing,
+ul.g-g li.sm2_paused,
+ul.g-g li.sm2_playing a {
+ color:black;
+ border-radius:20px;
+}
+
+ul.g-g li:hover {
+background:url(../image/ouadaa.png) repeat-x top right;
+}
+
+ul.g-g li:hover a {
+ color:white;
+}
+
+ul.g-g li.sm2_playing,
+ul.g-g li.sm2_playing:hover {
+background:url(../image/a.png) repeat-x top right;
+}
+
+
+ul.g-g-g {
+ list-style-type:none;
+ margin:0px;
+ padding:0px;
+
+}
+
+ul.g-g-g li {
+ /* assume all items will be sounds rather than wait for onload etc. in this example.. may differ for your uses. */
+ position:relative;
+ display:block;
+ width:auto;
+/* this one  */
+ border-radius:50px;
+ font-size:2em;
+ color:black;
+ padding:0.25em 0.5em 0.25em 0.5em;
+ border:none;
+ letter-spacing:-1px; /* ZOMG WEB X.0. ;) */
+ background-color:transparent;
+ -webkit-transition-property: hover;
+ -webkit-transition: background-color 0.15s ease-in-out;
+ -moz-transition: background-color 0.15s linear 0s; /* firefox 4 */
+  -o-transition-property: background-color; /* opera 10.5 */
+  -o-transition-duration: 0.15s;
+
+}
+
+ul.g-g-g li a {
+ display:block;
+ text-decoration:none;
+ font-weight:normal;
+ color:#310202;
+ text-align:right;
+ font-size:18px;
+ outline:none;
+ position:relative;
+ z-index:2;
+
+}
+
+ul.g-g-g li.sm2_playing,
+ul.g-g-g li.sm2_paused,
+ul.g-g-g li.sm2_playing a {
+ color:black;
+ border-radius:20px;
+}
+
+ul.g-g-g li:hover {
+background:url(../image/ouadaa.png) repeat-x top right;
+}
+
+ul.g-g-g li:hover a {
+ color:white;
+}
+
+ul.g-g-g li.sm2_playing,
+ul.g-g-g li.sm2_playing:hover {
+background:url(../image/a.png) repeat-x top right;
+}
+
+
+
+ul.h-h {
+ list-style-type:none;
+ margin:0px;
+ padding:0px;
+
+}
+
+ul.h-h li {
+ /* assume all items will be sounds rather than wait for onload etc. in this example.. may differ for your uses. */
+ position:relative;
+ display:block;
+ width:auto;
+/* this one  */
+ border-radius:50px;
+ font-size:2em;
+ color:black;
+ padding:0.25em 0.5em 0.25em 0.5em;
+ border:none;
+ letter-spacing:-1px; /* ZOMG WEB X.0. ;) */
+ background-color:transparent;
+ -webkit-transition-property: hover;
+ -webkit-transition: background-color 0.15s ease-in-out;
+ -moz-transition: background-color 0.15s linear 0s; /* firefox 4 */
+  -o-transition-property: background-color; /* opera 10.5 */
+  -o-transition-duration: 0.15s;
+
+}
+
+ul.h-h li a {
+ display:block;
+ text-decoration:none;
+ font-weight:normal;
+ color:#310202;
+ text-align:right;
+ font-size:18px;
+ outline:none;
+ position:relative;
+ z-index:2;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/h-h.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/h-h.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/h-h.png) 0 35 0 0 stretch;
+border-image: url(../image/h-h.png) 0 35 0 0 stretch;
+}
+
+ul.h-h li.sm2_playing,
+ul.h-h li.sm2_paused,
+ul.h-h li.sm2_playing a {
+ color:black;
+ border-radius:20px;
+}
+
+ul.h-h li:hover {
+background:url(../image/ouadaa.png) repeat-x top right;
+}
+
+ul.h-h li:hover a {
+ color:white;
+}
+
+ul.h-h li.sm2_playing,
+ul.h-h li.sm2_playing:hover {
+background:url(../image/a.png) repeat-x top right;
+}
+
+
+ul.h-h-h {
+ list-style-type:none;
+ margin:0px;
+ padding:0px;
+
+}
+
+ul.h-h-h li {
+ /* assume all items will be sounds rather than wait for onload etc. in this example.. may differ for your uses. */
+ position:relative;
+ display:block;
+ width:auto;
+/* this one  */
+ border-radius:50px;
+ font-size:2em;
+ color:black;
+ padding:0.25em 0.5em 0.25em 0.5em;
+ border:none;
+ letter-spacing:-1px; /* ZOMG WEB X.0. ;) */
+ background-color:transparent;
+ -webkit-transition-property: hover;
+ -webkit-transition: background-color 0.15s ease-in-out;
+ -moz-transition: background-color 0.15s linear 0s; /* firefox 4 */
+  -o-transition-property: background-color; /* opera 10.5 */
+  -o-transition-duration: 0.15s;
+
+}
+
+ul.h-h-h li a {
+ display:block;
+ text-decoration:none;
+ font-weight:normal;
+ color:#310202;
+ text-align:right;
+ font-size:18px;
+ outline:none;
+ position:relative;
+ z-index:2;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/h-h-h.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/h-h-h.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/h-h-h.png) 0 35 0 0 stretch;
+border-image: url(../image/h-h-h.png) 0 35 0 0 stretch;
+}
+
+ul.h-h-h li.sm2_playing,
+ul.h-h-h li.sm2_paused,
+ul.h-h-h li.sm2_playing a {
+ color:black;
+ border-radius:20px;
+}
+
+ul.h-h-h li:hover {
+background:url(../image/ouadaa.png) repeat-x top right;
+}
+
+ul.h-h-h li:hover a {
+ color:white;
+}
+
+ul.h-h-h li.sm2_playing,
+ul.h-h-h li.sm2_playing:hover {
+background:url(../image/a.png) repeat-x top right;
+}
+
+
+
+ul.i-i {
+ list-style-type:none;
+ margin:0px;
+ padding:0px;
+
+}
+
+ul.i-i li {
+ /* assume all items will be sounds rather than wait for onload etc. in this example.. may differ for your uses. */
+ position:relative;
+ display:block;
+ width:auto;
+/* this one  */
+ border-radius:50px;
+ font-size:2em;
+ color:black;
+ padding:0.25em 0.5em 0.25em 0.5em;
+ border:none;
+ letter-spacing:-1px; /* ZOMG WEB X.0. ;) */
+ background-color:transparent;
+ -webkit-transition-property: hover;
+ -webkit-transition: background-color 0.15s ease-in-out;
+ -moz-transition: background-color 0.15s linear 0s; /* firefox 4 */
+  -o-transition-property: background-color; /* opera 10.5 */
+  -o-transition-duration: 0.15s;
+
+}
+
+ul.i-i li a {
+ display:block;
+ text-decoration:none;
+ font-weight:normal;
+ color:#310202;
+ text-align:right;
+ font-size:18px;
+ outline:none;
+ position:relative;
+ z-index:2;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/i-i.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/i-i.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/i-i.png) 0 35 0 0 stretch;
+border-image: url(../image/i-i.png) 0 35 0 0 stretch;
+}
+
+ul.i-i li.sm2_playing,
+ul.i-i li.sm2_paused,
+ul.i-i li.sm2_playing a {
+ color:black;
+ border-radius:20px;
+}
+
+ul.i-i li:hover {
+background:url(../image/ouadaa.png) repeat-x top right;
+}
+
+ul.i-i li:hover a {
+ color:white;
+}
+
+ul.i-i li.sm2_playing,
+ul.i-i li.sm2_playing:hover {
+background:url(../image/a.png) repeat-x top right;
+}
+
+
+ul.i-i-i {
+ list-style-type:none;
+ margin:0px;
+ padding:0px;
+
+}
+
+ul.i-i-i li {
+ /* assume all items will be sounds rather than wait for onload etc. in this example.. may differ for your uses. */
+ position:relative;
+ display:block;
+ width:auto;
+/* this one  */
+ border-radius:50px;
+ font-size:2em;
+ color:black;
+ padding:0.25em 0.5em 0.25em 0.5em;
+ border:none;
+ letter-spacing:-1px; /* ZOMG WEB X.0. ;) */
+ background-color:transparent;
+ -webkit-transition-property: hover;
+ -webkit-transition: background-color 0.15s ease-in-out;
+ -moz-transition: background-color 0.15s linear 0s; /* firefox 4 */
+  -o-transition-property: background-color; /* opera 10.5 */
+  -o-transition-duration: 0.15s;
+
+}
+
+ul.i-i-i li a {
+ display:block;
+ text-decoration:none;
+ font-weight:normal;
+ color:#310202;
+ text-align:right;
+ font-size:18px;
+ outline:none;
+ position:relative;
+ z-index:2;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/i-i-i.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/i-i-i.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/i-i-i.png) 0 35 0 0 stretch;
+border-image: url(../image/i-i-i.png) 0 35 0 0 stretch;
+}
+
+ul.i-i-i li.sm2_playing,
+ul.i-i-i li.sm2_paused,
+ul.i-i-i li.sm2_playing a {
+ color:black;
+ border-radius:20px;
+}
+
+ul.i-i-i li:hover {
+background:url(../image/ouadaa.png) repeat-x top right;
+}
+
+ul.i-i-i li:hover a {
+ color:white;
+}
+
+ul.i-i-i li.sm2_playing,
+ul.i-i-i li.sm2_playing:hover {
+background:url(../image/a.png) repeat-x top right;
+}
+
+
+
+ul.j-j {
+ list-style-type:none;
+ margin:0px;
+ padding:0px;
+
+}
+
+ul.j-j li {
+ /* assume all items will be sounds rather than wait for onload etc. in this example.. may differ for your uses. */
+ position:relative;
+ display:block;
+ width:auto;
+/* this one  */
+ border-radius:50px;
+ font-size:2em;
+ color:black;
+ padding:0.25em 0.5em 0.25em 0.5em;
+ border:none;
+ letter-spacing:-1px; /* ZOMG WEB X.0. ;) */
+ background-color:transparent;
+ -webkit-transition-property: hover;
+ -webkit-transition: background-color 0.15s ease-in-out;
+ -moz-transition: background-color 0.15s linear 0s; /* firefox 4 */
+  -o-transition-property: background-color; /* opera 10.5 */
+  -o-transition-duration: 0.15s;
+
+}
+
+ul.j-j li a {
+ display:block;
+ text-decoration:none;
+ font-weight:normal;
+ color:#310202;
+ text-align:right;
+ font-size:18px;
+ outline:none;
+ position:relative;
+ z-index:2;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/j-j.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/j-j.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/j-j.png) 0 35 0 0 stretch;
+border-image: url(../image/j-j.png) 0 35 0 0 stretch;
+}
+
+ul.j-j li.sm2_playing,
+ul.j-j li.sm2_paused,
+ul.j-j li.sm2_playing a {
+ color:black;
+ border-radius:20px;
+}
+
+ul.j-j li:hover {
+background:url(../image/ouadaa.png) repeat-x top right;
+}
+
+ul.j-j li:hover a {
+ color:white;
+}
+
+ul.j-j li.sm2_playing,
+ul.j-j li.sm2_playing:hover {
+background:url(../image/a.png) repeat-x top right;
+}
+
+
+ul.j-j-j {
+ list-style-type:none;
+ margin:0px;
+ padding:0px;
+
+}
+
+ul.j-j-j li {
+ /* assume all items will be sounds rather than wait for onload etc. in this example.. may differ for your uses. */
+ position:relative;
+ display:block;
+ width:auto;
+/* this one  */
+ border-radius:50px;
+ font-size:2em;
+ color:black;
+ padding:0.25em 0.5em 0.25em 0.5em;
+ border:none;
+ letter-spacing:-1px; /* ZOMG WEB X.0. ;) */
+ background-color:transparent;
+ -webkit-transition-property: hover;
+ -webkit-transition: background-color 0.15s ease-in-out;
+ -moz-transition: background-color 0.15s linear 0s; /* firefox 4 */
+  -o-transition-property: background-color; /* opera 10.5 */
+  -o-transition-duration: 0.15s;
+
+}
+
+ul.j-j-j li a {
+ display:block;
+ text-decoration:none;
+ font-weight:normal;
+ color:#310202;
+ text-align:right;
+ font-size:18px;
+ outline:none;
+ position:relative;
+ z-index:2;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/j-j-j.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/j-j-j.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/j-j-j.png) 0 35 0 0 stretch;
+border-image: url(../image/j-j-j.png) 0 35 0 0 stretch;
+}
+
+ul.j-j-j li.sm2_playing,
+ul.j-j-j li.sm2_paused,
+ul.j-j-j li.sm2_playing a {
+ color:black;
+ border-radius:20px;
+}
+
+ul.j-j-j li:hover {
+background:url(../image/ouadaa.png) repeat-x top right;
+}
+
+ul.j-j-j li:hover a {
+ color:white;
+}
+
+ul.j-j-j li.sm2_playing,
+ul.j-j-j li.sm2_playing:hover {
+background:url(../image/a.png) repeat-x top right;
+}
+
+
+
+ul.playlist {
+ list-style-type:none;
+ margin:0px;
+ padding:0px;
+
+}
+
+ul.playlist li {
+ /* assume all items will be sounds rather than wait for onload etc. in this example.. may differ for your uses. */
+ position:relative;
+ display:block;
+ width:auto;
+/* this one  */
+ border-radius:8px;
+ font-size:2em;
+ color:black;
+ padding:0.25em 0.5em 0.25em 0.5em;
+ border:none;
+ letter-spacing:-1px; /* ZOMG WEB X.0. ;) */
+ background-color:transparent;
+ -webkit-transition-property: hover;
+ -webkit-transition: background-color 0.15s ease-in-out;
+ -moz-transition: background-color 0.15s linear 0s; /* firefox 4 */
+  -o-transition-property: background-color; /* opera 10.5 */
+  -o-transition-duration: 0.15s;
+
+}
+
+ul.playlist li a {
+ display:block;
+ text-decoration:none;
+ font-weight:normal;
+ color:#310202;
+ text-align:right;
+ font-size:15px;
+ outline:none;
+ position:relative;
+ z-index:2;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/audio.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/audio.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/audio.png) 0 35 0 0 stretch;
+border-image: url(../image/audio.png) 0 35 0 0 stretch;
+}
+
+ul.playlist li.sm2_playing a {
+ display:block;
+ text-decoration:none;
+ font-weight:normal;
+ color:#310202;
+ text-align:right;
+ font-size:15px;
+ outline:none;
+ position:relative;
+ z-index:2;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/pause.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/pause.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/pause.png) 0 35 0 0 stretch;
+border-image: url(../image/pause.png) 0 35 0 0 stretch;
+}
+ul.playlist li.sm2_paused a {
+ display:block;
+ text-decoration:none;
+ font-weight:normal;
+ color:#310202;
+ text-align:right;
+ font-size:15px;
+ outline:none;
+ position:relative;
+ z-index:2;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/play.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/play.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/play.png) 0 35 0 0 stretch;
+border-image: url(../image/play.png) 0 35 0 0 stretch;
+}
+ul.playlist li.sm2_playing a {
+ display:block;
+ text-decoration:none;
+ font-weight:normal;
+ color:#310202;
+ text-align:right;
+ font-size:15px;
+ outline:none;
+ position:relative;
+ z-index:2;
+border-style: solid;
+border-width: 0px 35px 0px 0px;
+-moz-border-image: url(../image/pause.png) 0 35 0 0 stretch;
+-webkit-border-image: url(../image/pause.png) 0 35 0 0 stretch;
+-o-border-image: url(../image/pause.png) 0 35 0 0 stretch;
+border-image: url(../image/pause.png) 0 35 0 0 stretch;
+}
+
+ul.playlist li:hover {
+background:url(../image/jamal.png) repeat-x top right;
+}
+
+ul.playlist li:hover a {
+ color:black;
+}
+
+ul.playlist li.sm2_playing,
+ul.playlist li.sm2_playing:hover {
+background:url(../image/1top-highlight.png) repeat-x top right;
+}
+
+ul.playlist li.sm2_paused {
+background:url(../image/1top-highlight.png) repeat-x top right;
+}
+
+ul.playlist li.sm2_playing:hover a,
+ul.playlist li.sm2_paused a {
+ color:white;
+}
+
+ul.playlist li .controls {
+ display:none;
+}
+
+ul.playlist li .peak,
+ul.playlist.use-peak li .peak {
+ display:none;
+ position:absolute;
+ top:0.55em;
+ right:0.5em;
+}
+
+ul.playlist li.sm2_playing .controls,
+ul.playlist li.sm2_paused .controls {
+ position:relative;
+ display:block;
+}
+
+ul.playlist.use-peak li.sm2_playing .peak,
+ul.playlist.use-peak li.sm2_paused .peak {
+ display:inline;
+ display:inline-block;
+}
+
+ul.playlist.use-peak li .peak {
+ display:none; /* IE 7 */
+}
+
+ul.playlist li.sm2_paused .controls {
+ background-color:transparent;
+}
+
+ul.playlist li:hover .controls .statusbar {
+ position:relative;
+ cursor:ew-resize;
+ cursor:-moz-grab;
+ cursor:grab;
+}
+
+ul.playlist li.sm2_paused .controls .statusbar {
+ background-color:transparent;
+}
+
+ul.playlist li .controls {
+ position:relative;
+ margin-top:0.25em;
+ margin-bottom:0.25em;
+ background-color:transparent;
+}
+
+ul.playlist li .controls .statusbar {
+ position:relative;
+ height:12px;
+ background-color:transparent;
+ border:1px solid black;
+ border-radius:3px;
+ overflow:hidden;
+ cursor:-moz-grab;
+ cursor:grab;
+}
+
+ul.playlist li .controls.dragging .statusbar {
+ cursor:-moz-grabbing;
+ cursor:grabbing;
+}
+
+ul.playlist li .controls .statusbar .position,
+ul.playlist li .controls .statusbar .loading,
+ul.playlist li .controls .statusbar .annotation {
+ position:absolute;
+ left:0px;
+ top:0px;
+ height:0.5em;
+}
+
+ul.playlist li .controls .statusbar .position {
+border-style: solid;
+border-width: 46px 0px 0px;
+-moz-border-image: url(../image/playing.png) 46 0 0 repeat;
+-webkit-border-image: url(../image/playing.png) 46 0 0 repeat;
+-o-border-image: url(../image/playing.png) 46 0 0 repeat;
+border-image: url(../image/playing.png) 46 0 0 repeat;
+}
+
+ul.playlist li.sm2_paused .controls .statusbar .position {
+border-style: solid;
+border-width: 46px 0px 0px;
+-moz-border-image: url(../image/paused.png) 46 0 0 repeat;
+-webkit-border-image: url(../image/paused.png) 46 0 0 repeat;
+-o-border-image: url(../image/paused.png) 46 0 0 repeat;
+border-image: url(../image/paused.png) 46 0 0 repeat;
+}
+
+ul.playlist li .controls .statusbar .loading {
+background:url(../image/ouadaa.png) repeat-x top right;
+}
+
+ul.playlist li .controls .statusbar .position,
+ul.playlist li .controls .statusbar .loading {
+ width:0px;
+}
+
+ul.playlist li.sm2_playing a.sm2_link,
+ul.playlist li.sm2_paused a.sm2_link {
+ margin-right:0.1em; /* room for timing stuff */
+}
+
+ul.playlist li .timing {
+ position:absolute;
+ display:none;
+ text-align:left;
+ right:1.5em;
+ bottom:0.0em;
+ width:auto;
+ height:1em;
+ padding:0px 0px;
+background:url(../image/timing.png) repeat-x top right;
+
+ border:1px solid #e54101;
+ border-radius:5px;
+ letter-spacing:0px;
+ font:35% monaco,"VT-100","lucida console",courier,system;
+ line-height:1em;
+ vertical-align:middle;
+}
+
+ul.playlist.use-peak li .timing {
+ right:4.25em;
+}
+
+ul.playlist li:hover .timing {
+ z-index:2;
+}
+
+ul.playlist li .timing div.sm2_timing {
+ margin:0px;
+ padding:0px;
+ margin-top:-1em;
+}
+
+ul.playlist li.sm2_playing .timing,
+ul.playlist li.sm2_paused .timing {
+ display:block;
+}
+
+ul.playlist li.sm2_paused .timing .sm2_position {
+ text-decoration:blink; /* hee hee. first actual appropriate use? :D */
+}
+
+ul.playlist li.sm2_paused .timing,
+ul.playlist.use-peak li.sm2_paused .peak {
+background:url(../image/timing1.png) repeat-x top right;
+ border-color:#a7db3f;
+}
+
+/* peak data */
+
+/* ul.playlist ... */
+
+ul.playlist.use-peak li .peak {
+ display:none;
+ zoom:1;
+ border:1px solid #99ccff;
+ padding:2px;
+ height:0.55em;
+ border-radius:4px;
+ background-color:transparent;
+ width:0.8em;
+ height:0.55em;
+ margin-top:-3px;
+}
+
+ul.playlist.use-peak li .peak-box {
+ position:relative;
+ width:100%;
+ height:0.55em;
+ overflow:hidden;
+}
+
+ul.playlist li .peak .l,
+ul.playlist li .peak .r {
+ position:absolute;
+ left:0px;
+ top:0px;
+ width:7px;
+ height:50px;
+ background:#fff;
+ border:1px solid #fff;
+ border-radius:1px;
+ margin-top:1em;
+}
+
+ul.playlist li .peak .l {
+ margin-right:1px;
+}
+
+ul.playlist li .peak .r {
+ left:10px;
+}
+
+#control-template {
+ display:none;
+}
